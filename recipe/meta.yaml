@@ -1,46 +1,46 @@
-{% set version = "0.0.7" %}
+{% set version = "0.1.1" %}
 
 package:
-    name: cogger
-    version: {{ version }}
+  name: cogger
+  version: {{ version }}
 
 source:
-    url: https://github.com/airbusgeo/cogger/archive/v{{ version }}.tar.gz
-    sha256: 1bbccd1500a517b6eb44bfa12dff20c0b92612bc0c10b5dca78e1b0eff557097
+  url: https://github.com/airbusgeo/cogger/archive/v{{ version }}.tar.gz
+  sha256: 37e96330fef53d289297d2c37224f56ec01b4598b2d5e244cb496bec7db2113b
 
 build:
-    number: 0
-    script:
-        - go-licenses save . --save_path library_licenses ./cmd/cogger
-        - go test -v ./cmd/cogger
-        - go build -v -o $PREFIX/bin/cogger -ldflags="-s -w" ./cmd/cogger     # [not win]
-        - go build -v -o %LIBRARY_BIN%\cogger.exe -ldflags="-s" ./cmd/cogger  # [win]
+  number: 0
+  script:
+    - go-licenses save . --save_path library_licenses ./cmd/cogger
+    - go test -v ./cmd/cogger
+    - go build -v -o $PREFIX/bin/cogger -ldflags="-s -w" ./cmd/cogger         # [not win]
+    - go build -v -o %LIBRARY_BIN%\cogger.exe -ldflags="-s" ./cmd/cogger      # [win]
 
 requirements:
-    build:
-        - {{ compiler('go-nocgo') }}
-        - go-licenses
+  build:
+    - {{ compiler('go-nocgo') }}
+    - go-licenses
 
 test:
-    commands:
-        - cogger --help
+  commands:
+    - cogger --help
 
 about:
-    home: https://github.com/airbusgeo/cogger
-    summary: "cogger is a fast geotiff to COG converter"
-    description: |
-        Cogger is a standalone binary and a golang library that reads an
-        internally tiled geotiff (optionally with overviews and masks) and
-        rewrites it as a Cloud Optimized Geotiff (COG). This process being a
-        reshuffling of the original geotiff's bytes, it should run as fast as
-        the underlying disk or network i/o.
-    license: Apache-2.0
-    license_file:
-        - LICENSE
-        - library_licenses/
-    doc_url: https://github.com/airbusgeo/cogger
-    dev_url: https://github.com/airbusgeo/cogger
+  home: https://github.com/airbusgeo/cogger
+  summary: "cogger is a fast geotiff to COG converter"
+  description: |
+    Cogger is a standalone binary and a golang library that reads an
+    internally tiled geotiff (optionally with overviews and masks) and
+    rewrites it as a Cloud Optimized Geotiff (COG). This process being a
+    reshuffling of the original geotiff's bytes, it should run as fast as
+    the underlying disk or network i/o.
+  license: Apache-2.0
+  license_file:
+    - LICENSE
+    - library_licenses/
+  doc_url: https://github.com/airbusgeo/cogger
+  dev_url: https://github.com/airbusgeo/cogger
 
 extra:
-    recipe-maintainers:
-        - phargogh
+  recipe-maintainers:
+    - phargogh
